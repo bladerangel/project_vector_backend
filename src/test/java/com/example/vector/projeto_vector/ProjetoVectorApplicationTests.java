@@ -1,4 +1,4 @@
-package com.example.vector.projeto_vector;
+packagecom.project_vector_backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

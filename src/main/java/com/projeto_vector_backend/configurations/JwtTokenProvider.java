@@ -1,8 +1,8 @@
-package com.example.vector.projeto_vector.configurations;
+package com.project_vector_backend.configurations;
 
 import java.util.Date;
 
-import com.example.vector.projeto_vector.models.AuthUser;
+import com.project_vector_backend.models.AuthUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

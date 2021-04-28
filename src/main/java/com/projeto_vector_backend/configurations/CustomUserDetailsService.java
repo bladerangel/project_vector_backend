@@ -1,9 +1,9 @@
-package com.example.vector.projeto_vector.configurations;
+package com.project_vector_backend.configurations;
 
 import javax.transaction.Transactional;
 
-import com.example.vector.projeto_vector.models.AuthUser;
-import com.example.vector.projeto_vector.repositories.AuthUserRepository;
+import com.project_vector_backend.models.AuthUser;
+import com.project_vector_backend.repositories.AuthUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,4 +1,4 @@
-package com.example.vector.projeto_vector.configurations;
+package com.project_vector_backend.configurations;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

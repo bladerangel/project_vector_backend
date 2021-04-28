@@ -1,4 +1,4 @@
-package com.example.vector.projeto_vector.controllers;
+package com.project_vector_backend.controllers;
 
 import java.net.URI;
 import java.text.ParseException;
@@ -10,11 +10,11 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import com.example.vector.projeto_vector.configurations.JwtTokenProvider;
+import com.project_vector_backend.configurations.JwtTokenProvider;
 
-import com.example.vector.projeto_vector.models.AuthUser;
+import com.project_vector_backend.models.AuthUser;
 
-import com.example.vector.projeto_vector.repositories.AuthUserRepository;
+import com.project_vector_backend.repositories.AuthUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,4 +1,4 @@
-package com.example.vector.projeto_vector.configurations;
+package com.project_vector_backend.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.example.vector.projeto_vector.models;
+package com.project_vector_backend.models;
 
 import java.util.Collection;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.example.vector.projeto_vector.listeners.AuthUserListener;
+import com.project_vector_backend.listeners.AuthUserListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
