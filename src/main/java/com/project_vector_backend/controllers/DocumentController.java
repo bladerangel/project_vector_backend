@@ -1,6 +1,9 @@
 package com.project_vector_backend.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.project_vector_backend.models.AuthUser;
@@ -9,6 +12,11 @@ import com.project_vector_backend.repositories.DocumentRepository;
 import com.project_vector_backend.repositories.AuthUserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
@@ -32,11 +41,30 @@ public class DocumentController {
   private AuthUserRepository authUserRepository;
 
   @GetMapping
-  public ResponseEntity<List<Document>> read(@AuthenticationPrincipal AuthUser authUser) {
+  public ResponseEntity<Object> read(@RequestParam(defaultValue = "0") Integer page,
+      @AuthenticationPrincipal AuthUser authUser) {
     AuthUser user = authUserRepository.getById(authUser.getId());
     List<Document> documents = user.getDocuments();
 
-    return ResponseEntity.ok().body(documents);
+    Pageable pageable = PageRequest.of(page, 5, Sort.by("id"));
+
+    final int start = (int) pageable.getOffset();
+    final int end = Math.min((start + pageable.getPageSize()), documents.size());
+    final Page<Document> pagedResult = new PageImpl<>(documents.subList(start, end), pageable, documents.size());
+
+    if (pagedResult.hasContent()) {
+      Map<String, Object> response = new HashMap<>();
+      response.put("page", pagedResult.getNumber());
+      response.put("pages", pagedResult.getTotalPages());
+      response.put("show", pagedResult.getNumberOfElements());
+      response.put("total", pagedResult.getTotalElements());
+      response.put("documents", pagedResult.getContent());
+
+      return ResponseEntity.ok(response);
+
+    } else {
+      return ResponseEntity.ok(new ArrayList<Document>());
+    }
   }
 
   @PostMapping
