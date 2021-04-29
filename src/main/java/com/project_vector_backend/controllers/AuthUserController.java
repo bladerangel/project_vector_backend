@@ -44,7 +44,7 @@ public class AuthUserController {
   public ResponseEntity<Object> authenticateUser(@Valid @RequestBody AuthUser authUser) throws ParseException {
 
     Authentication authentication = authenticationManager
-        .authenticate(new UsernamePasswordAuthenticationToken(authUser.getEmail(), authUser.getPassword()));
+        .authenticate(new UsernamePasswordAuthenticationToken(authUser.getUsername(), authUser.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -54,21 +54,28 @@ public class AuthUserController {
 
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 
-    Optional<AuthUser> authUserFound = authUserRepository.findByEmail(authUser.getEmail());
-    Map<String, Object> response = new HashMap<>();
-    response.put("user", authUserFound);
-    response.put("token", jwt);
-    response.put("expiryDate", formatter.format(expiryDate));
+    Optional<AuthUser> authUserFound = authUserRepository.findByUsername(authUser.getUsername());
 
-    return ResponseEntity.ok(response);
+    if (authUserFound.isPresent()) {
+      Map<String, Object> response = new HashMap<>();
+      AuthUser user = authUserFound.get();
+      response.put("id", user.getId());
+      response.put("username", user.getUsername());
+      response.put("documents", user.getDocuments());
+      response.put("token", jwt);
+      response.put("expiryDate", formatter.format(expiryDate));
+
+      return ResponseEntity.ok(response);
+    }
+    return ResponseEntity.notFound().build();
   }
 
   @PostMapping("/signup")
   public ResponseEntity<Object> registerUser(@Valid @RequestBody AuthUser authUser) {
     authUser.setId(null);
 
-    if (authUserRepository.existsByEmail(authUser.getEmail())) {
-      return ResponseEntity.badRequest().body("This email is already registered.");
+    if (authUserRepository.existsByUsername(authUser.getUsername())) {
+      return ResponseEntity.badRequest().body("This username is already registered.");
     }
 
     URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/{username}")

@@ -77,7 +77,7 @@ public class DocumentController {
       updatedDocument.setAuthUser(user);
       documentRepository.save(updatedDocument);
 
-      return ResponseEntity.ok().body(updatedDocument);
+      return ResponseEntity.ok(updatedDocument);
     }
     return ResponseEntity.notFound().build();
 

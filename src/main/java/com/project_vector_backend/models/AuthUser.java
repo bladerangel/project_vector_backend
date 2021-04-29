@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
 import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,7 +25,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }) })
 @EntityListeners(AuthUserListener.class)
 @Data
 @AllArgsConstructor
@@ -40,8 +39,7 @@ public class AuthUser implements UserDetails {
   private Long id;
 
   @NotBlank
-  @Email
-  private String email;
+  private String username;
 
   @JsonProperty(access = Access.WRITE_ONLY)
   @NotBlank
@@ -54,12 +52,6 @@ public class AuthUser implements UserDetails {
   @Override
   @JsonIgnore
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
-  }
-
-  @Override
-  @JsonIgnore
-  public String getUsername() {
     return null;
   }
 
