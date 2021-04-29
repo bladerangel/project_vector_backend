@@ -33,6 +33,9 @@ public class Document {
   @NotBlank
   private String description;
 
+  @NotBlank
+  private String personRequested;
+
   @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "authUser_id", referencedColumnName = "id")
